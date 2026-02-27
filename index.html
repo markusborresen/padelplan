@@ -5,34 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Padelplan 2026-02-27</title>
   <style>
-    body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial; margin: 16px; }
-    .card { border: 1px solid #ddd; border-radius: 12px; padding: 14px; max-width: 980px; }
-    table { width: 100%; border-collapse: collapse; }
-    th, td { padding: 10px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
-    th { text-align: left; font-size: 14px; }
-    td { font-size: 15px; }
-    .muted { color: #666; font-size: 13px; line-height: 1.35; }
-    .scoregrid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin-top: 12px; }
-    .pill { display: inline-block; padding: 3px 8px; border: 1px solid #ddd; border-radius: 999px; font-size: 13px; }
-    .tag { display:inline-block; padding: 4px 10px; border-radius: 999px; border:1px solid #ddd; font-size: 12px; }
-    .btn {
-      display:inline-block; padding:8px 12px; border:1px solid #ddd; border-radius:10px;
-      background:#fff; cursor:pointer; font-size:14px;
-    }
-    .btn:active { transform: translateY(1px); }
-    @media print {
-      body { margin: 0; }
-      .muted, .btn { display: none; }
-      .card { border: none; }
-    }
+
+  body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial; margin: 12px; }
+  .card { border: 1px solid #ddd; border-radius: 12px; padding: 12px; max-width: 980px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px 6px; border-bottom: 1px solid #eee; vertical-align: top; }
+  th { text-align: left; font-size: 13px; }
+  td { font-size: 14px; }
+
+  h2 { font-size: 18px; margin: 0 0 6px 0; }
+  h3 { font-size: 16px; margin: 12px 0 6px 0; }
+
+  .muted { color: #666; font-size: 12px; line-height: 1.35; }
+  .scoregrid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-top: 10px; }
+  .pill { display: inline-block; padding: 2px 7px; border: 1px solid #ddd; border-radius: 999px; font-size: 12px; }
+
+  .tag { display:inline-block; padding: 3px 8px; border-radius: 999px; border:1px solid #ddd; font-size: 11px; }
+
+  .btn {
+    display:inline-block; padding: 7px 10px; border:1px solid #ddd; border-radius:10px;
+    background:#fff; cursor:pointer; font-size:13px;
+  }
+  .btn:active { transform: translateY(1px); }
+
+  /* Mobil: enda litt tettere */
+  @media (max-width: 520px) {
+    body { margin: 8px; }
+    .card { padding: 10px; border-radius: 10px; }
+
+    th, td { padding: 6px 4px; }
+    th { font-size: 12px; }
+    td { font-size: 13px; }
+
+    h2 { font-size: 16px; }
+    h3 { font-size: 15px; }
+
+    .scoregrid { grid-template-columns: 1fr; } /* 1 kolonne på mobil */
+    .btn { padding: 6px 9px; font-size: 12.5px; }
+  }
+
+  @media print {
+    body { margin: 0; }
+    .muted, .btn { display: none; }
+    .card { border: none; }
+  }
+
   </style>
 </head>
 <body>
   <div class="card">
-    <h2 style="margin:0 0 6px 0;">Padelplan (5 spillere, 5 kamper)</h2>
+    <h2>Padelplan (5 spillere, 5 kamper)</h2>
+
     <div class="muted" style="margin-bottom:10px;">
       <span class="tag">PERFEKT</span><br/>
-      Valg av vinner (A/B) lagres på denne enheten (localStorage). Plan-ID: <b>2026-02-27</b>
+      Valg av vinner (A/B) lagres på denne enheten. Plan-ID: <b>2026-02-27</b>
     </div>
 
     <div style="display:flex; gap:10px; margin: 8px 0 14px 0;">
@@ -53,9 +80,9 @@
         
         <tr>
           <td>1</td>
-          <td><b>Marius</b> &amp; <b>Partap</b></td>
-          <td><b>Markus</b> &amp; <b>Victoria</b></td>
-          <td>Herman</td>
+          <td><b>Herman</b> &amp; <b>Markus</b></td>
+          <td><b>Partap</b> &amp; <b>Victoria</b></td>
+          <td>Marius</td>
           <td>
             <label><input type="radio" name="w1" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w1" value="B"> B</label>
@@ -64,8 +91,8 @@
         
         <tr>
           <td>2</td>
-          <td><b>Herman</b> &amp; <b>Marius</b></td>
-          <td><b>Partap</b> &amp; <b>Victoria</b></td>
+          <td><b>Herman</b> &amp; <b>Partap</b></td>
+          <td><b>Marius</b> &amp; <b>Victoria</b></td>
           <td>Markus</td>
           <td>
             <label><input type="radio" name="w2" value="A"> A</label>
@@ -75,8 +102,8 @@
         
         <tr>
           <td>3</td>
-          <td><b>Herman</b> &amp; <b>Markus</b></td>
-          <td><b>Marius</b> &amp; <b>Victoria</b></td>
+          <td><b>Herman</b> &amp; <b>Victoria</b></td>
+          <td><b>Marius</b> &amp; <b>Markus</b></td>
           <td>Partap</td>
           <td>
             <label><input type="radio" name="w3" value="A"> A</label>
@@ -86,9 +113,9 @@
         
         <tr>
           <td>4</td>
-          <td><b>Herman</b> &amp; <b>Victoria</b></td>
+          <td><b>Herman</b> &amp; <b>Marius</b></td>
           <td><b>Markus</b> &amp; <b>Partap</b></td>
-          <td>Marius</td>
+          <td>Victoria</td>
           <td>
             <label><input type="radio" name="w4" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w4" value="B"> B</label>
@@ -97,9 +124,9 @@
         
         <tr>
           <td>5</td>
-          <td><b>Herman</b> &amp; <b>Partap</b></td>
-          <td><b>Marius</b> &amp; <b>Markus</b></td>
-          <td>Victoria</td>
+          <td><b>Marius</b> &amp; <b>Partap</b></td>
+          <td><b>Markus</b> &amp; <b>Victoria</b></td>
+          <td>Herman</td>
           <td>
             <label><input type="radio" name="w5" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w5" value="B"> B</label>
@@ -109,24 +136,24 @@
       </tbody>
     </table>
 
-    <h3 style="margin:14px 0 6px 0;">Poeng (vinnerlag = 1 poeng per spiller)</h3>
+    <h3>Poeng (vinnerlag = 1 poeng per spiller)</h3>
     <div id="scores" class="scoregrid"></div>
 
     <div class="muted" style="margin-top:10px;">
-      Hvis du åpner samme URL på en annen telefon, vil den ikke se valgene dine (lagres lokalt per enhet).
+      Tips: Hvis du åpner samme URL på en annen telefon, vil den ikke se valgene dine (lagres lokalt per enhet).
     </div>
   </div>
 
 <script>
-const players = ['Partap','Herman','Victoria','Marius','Markus'];
-const matches = [{a:['Marius', 'Partap'], b:['Markus', 'Victoria']},{a:['Herman', 'Marius'], b:['Partap', 'Victoria']},{a:['Herman', 'Markus'], b:['Marius', 'Victoria']},{a:['Herman', 'Victoria'], b:['Markus', 'Partap']},{a:['Herman', 'Partap'], b:['Marius', 'Markus']}];
+const players = ['Partap','Marius','Herman','Victoria','Markus'];
+const matches = [{a:['Herman', 'Markus'], b:['Partap', 'Victoria']},{a:['Herman', 'Partap'], b:['Marius', 'Victoria']},{a:['Herman', 'Victoria'], b:['Marius', 'Markus']},{a:['Herman', 'Marius'], b:['Markus', 'Partap']},{a:['Marius', 'Partap'], b:['Markus', 'Victoria']}];
 const STORAGE_KEY = 'padelplan_winners_v1_2026-02-27';
 
 function saveWinners() {
   const winners = {};
   for (let i = 0; i < matches.length; i++) {
     const pick = document.querySelector(`input[name="w${i+1}"]:checked`);
-    winners[i+1] = pick ? pick.value : null; // "A", "B" eller null
+    winners[i+1] = pick ? pick.value : null;
   }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(winners));
 }
