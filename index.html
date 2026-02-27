@@ -29,7 +29,6 @@
   }
   .btn:active { transform: translateY(1px); }
 
-  /* Mobil: enda litt tettere */
   @media (max-width: 520px) {
     body { margin: 8px; }
     .card { padding: 10px; border-radius: 10px; }
@@ -41,7 +40,7 @@
     h2 { font-size: 16px; }
     h3 { font-size: 15px; }
 
-    .scoregrid { grid-template-columns: 1fr; } /* 1 kolonne på mobil */
+    .scoregrid { grid-template-columns: 1fr; }
     .btn { padding: 6px 9px; font-size: 12.5px; }
   }
 
@@ -59,11 +58,12 @@
 
     <div class="muted" style="margin-bottom:10px;">
       <span class="tag">PERFEKT</span><br/>
-      Valg av vinner (A/B) lagres på denne enheten. Plan-ID: <b>2026-02-27</b>
+      Kampvalg (A/B) kan nullstilles for ny runde uten å slette poengsum. Plan-ID: <b>2026-02-27</b>
     </div>
 
-    <div style="display:flex; gap:10px; margin: 8px 0 14px 0;">
-      <button class="btn" onclick="window.resetPadel()">Nullstill poeng</button>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin: 8px 0 14px 0;">
+      <button class="btn" onclick="window.resetMatchesOnly()">Nullstill kampvalg (ny runde)</button>
+      <button class="btn" onclick="window.resetAll()">Nullstill alt</button>
     </div>
 
     <table>
@@ -80,9 +80,9 @@
         
         <tr>
           <td>1</td>
-          <td><b>Herman</b> &amp; <b>Markus</b></td>
-          <td><b>Partap</b> &amp; <b>Victoria</b></td>
-          <td>Marius</td>
+          <td><b>Herman</b> &amp; <b>Marius</b></td>
+          <td><b>Markus</b> &amp; <b>Victoria</b></td>
+          <td>Partap</td>
           <td>
             <label><input type="radio" name="w1" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w1" value="B"> B</label>
@@ -91,9 +91,9 @@
         
         <tr>
           <td>2</td>
-          <td><b>Herman</b> &amp; <b>Partap</b></td>
-          <td><b>Marius</b> &amp; <b>Victoria</b></td>
-          <td>Markus</td>
+          <td><b>Marius</b> &amp; <b>Markus</b></td>
+          <td><b>Partap</b> &amp; <b>Victoria</b></td>
+          <td>Herman</td>
           <td>
             <label><input type="radio" name="w2" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w2" value="B"> B</label>
@@ -102,9 +102,9 @@
         
         <tr>
           <td>3</td>
-          <td><b>Herman</b> &amp; <b>Victoria</b></td>
-          <td><b>Marius</b> &amp; <b>Markus</b></td>
-          <td>Partap</td>
+          <td><b>Herman</b> &amp; <b>Partap</b></td>
+          <td><b>Marius</b> &amp; <b>Victoria</b></td>
+          <td>Markus</td>
           <td>
             <label><input type="radio" name="w3" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w3" value="B"> B</label>
@@ -113,8 +113,8 @@
         
         <tr>
           <td>4</td>
-          <td><b>Herman</b> &amp; <b>Marius</b></td>
-          <td><b>Markus</b> &amp; <b>Partap</b></td>
+          <td><b>Herman</b> &amp; <b>Markus</b></td>
+          <td><b>Marius</b> &amp; <b>Partap</b></td>
           <td>Victoria</td>
           <td>
             <label><input type="radio" name="w4" value="A"> A</label>
@@ -124,9 +124,9 @@
         
         <tr>
           <td>5</td>
-          <td><b>Marius</b> &amp; <b>Partap</b></td>
-          <td><b>Markus</b> &amp; <b>Victoria</b></td>
-          <td>Herman</td>
+          <td><b>Herman</b> &amp; <b>Victoria</b></td>
+          <td><b>Markus</b> &amp; <b>Partap</b></td>
+          <td>Marius</td>
           <td>
             <label><input type="radio" name="w5" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w5" value="B"> B</label>
@@ -136,81 +136,184 @@
       </tbody>
     </table>
 
-    <h3>Poeng (vinnerlag = 1 poeng per spiller)</h3>
+    <h3>Poeng (akkumulert)</h3>
     <div id="scores" class="scoregrid"></div>
 
     <div class="muted" style="margin-top:10px;">
-      Tips: Hvis du åpner samme URL på en annen telefon, vil den ikke se valgene dine (lagres lokalt per enhet).
+      NB: Dette lagres lokalt på enheten (localStorage). Andre telefoner ser ikke score/valg.
     </div>
   </div>
 
 <script>
-const players = ['Partap','Marius','Herman','Victoria','Markus'];
-const matches = [{a:['Herman', 'Markus'], b:['Partap', 'Victoria']},{a:['Herman', 'Partap'], b:['Marius', 'Victoria']},{a:['Herman', 'Victoria'], b:['Marius', 'Markus']},{a:['Herman', 'Marius'], b:['Markus', 'Partap']},{a:['Marius', 'Partap'], b:['Markus', 'Victoria']}];
-const STORAGE_KEY = 'padelplan_winners_v1_2026-02-27';
+const players = ['Markus','Partap','Marius','Victoria','Herman'];
+const matches = [{a:['Herman', 'Marius'], b:['Markus', 'Victoria']},{a:['Marius', 'Markus'], b:['Partap', 'Victoria']},{a:['Herman', 'Partap'], b:['Marius', 'Victoria']},{a:['Herman', 'Markus'], b:['Marius', 'Partap']},{a:['Herman', 'Victoria'], b:['Markus', 'Partap']}];
 
-function saveWinners() {
-  const winners = {};
-  for (let i = 0; i < matches.length; i++) {
-    const pick = document.querySelector(`input[name="w${i+1}"]:checked`);
-    winners[i+1] = pick ? pick.value : null;
-  }
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(winners));
+const WINNERS_KEY = 'padelplan_winners_v2_2026-02-27';
+const SCORES_KEY  = 'padelplan_scores_v2_2026-02-27';
+
+let winners = {};
+let scores  = {};
+
+function initEmptyScores() {
+  const obj = {};
+  for (let i = 0; i < players.length; i++) obj[players[i]] = 0;
+  return obj;
 }
 
 function loadWinners() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return;
-  let winners;
+  const raw = localStorage.getItem(WINNERS_KEY);
+  if (!raw) return {};
   try {
-    winners = JSON.parse(raw);
+    const w = JSON.parse(raw);
+    return (w && typeof w === "object") ? w : {};
   } catch {
-    return;
+    return {};
   }
-  for (let i = 0; i < matches.length; i++) {
-    const v = winners[i+1];
+}
+
+function saveWinners() {
+  localStorage.setItem(WINNERS_KEY, JSON.stringify(winners));
+}
+
+function loadScores() {
+  const raw = localStorage.getItem(SCORES_KEY);
+  if (!raw) return null;
+  try {
+    const s = JSON.parse(raw);
+    return (s && typeof s === "object") ? s : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveScores() {
+  localStorage.setItem(SCORES_KEY, JSON.stringify(scores));
+}
+
+function applyWinnerDelta(matchIndex, prevWinner, newWinner) {
+  // matchIndex er 1-basert
+  const m = matches[matchIndex - 1];
+
+  function addTeam(team, delta) {
+    scores[team[0]] = (scores[team[0]] || 0) + delta;
+    scores[team[1]] = (scores[team[1]] || 0) + delta;
+  }
+
+  // Fjern gammel (hvis finnes)
+  if (prevWinner === "A") addTeam(m.a, -1);
+  if (prevWinner === "B") addTeam(m.b, -1);
+
+  // Legg til ny
+  if (newWinner === "A") addTeam(m.a, +1);
+  if (newWinner === "B") addTeam(m.b, +1);
+}
+
+function setRadioFromWinners() {
+  for (let i = 1; i <= matches.length; i++) {
+    const v = winners[i];
     if (v !== "A" && v !== "B") continue;
-    const el = document.querySelector(`input[name="w${i+1}"][value="${v}"]`);
+    const el = document.querySelector('input[name="w' + i + '"][value="' + v + '"]');
     if (el) el.checked = true;
   }
 }
 
-function computeScores() {
-  const scores = Object.fromEntries(players.map(p => [p, 0]));
-  for (let i = 0; i < matches.length; i++) {
-    const pick = document.querySelector(`input[name="w${i+1}"]:checked`);
-    if (!pick) continue;
-    const m = matches[i];
-    const team = pick.value === "A" ? m.a : m.b;
-    scores[team[0]] += 1;
-    scores[team[1]] += 1;
-  }
-  return scores;
+function renderScores() {
+  const entries = Object.entries(scores)
+    .sort((a,b) => (b[1]-a[1]) || a[0].localeCompare(b[0]));
+
+  const el = document.getElementById("scores");
+  el.innerHTML = entries.map(([p, s]) =>
+    '<div><span class="pill">' + s + '</span> ' + p + '</div>'
+  ).join("");
 }
 
-function renderScores() {
-  const scores = computeScores();
-  const entries = Object.entries(scores).sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0]));
-  const el = document.getElementById("scores");
-  el.innerHTML = entries.map(([p, s]) => `<div><span class="pill">${s}</span> ${p}</div>`).join("");
+function rebuildScoresFromWinners() {
+  // Fallback: hvis score mangler, men winners finnes (f.eks. etter sletting av SCORES_KEY)
+  scores = initEmptyScores();
+  for (let i = 1; i <= matches.length; i++) {
+    const v = winners[i];
+    if (v !== "A" && v !== "B") continue;
+    applyWinnerDelta(i, null, v);
+  }
+  saveScores();
 }
 
 document.addEventListener("change", (e) => {
-  if (e.target && e.target.name && e.target.name.startsWith("w")) {
-    saveWinners();
-    renderScores();
-  }
+  const t = e.target;
+  if (!t || !t.name || !t.name.startsWith("w")) return;
+
+  // name="w5" -> matchIndex=5
+  const matchIndex = parseInt(t.name.slice(1), 10);
+  if (!Number.isFinite(matchIndex)) return;
+
+  const newWinner = t.value; // "A" eller "B"
+  const prevWinner = winners[matchIndex] || null;
+
+  if (newWinner !== "A" && newWinner !== "B") return;
+
+  // Oppdater score med delta (håndterer også endring fra A->B)
+  applyWinnerDelta(matchIndex, prevWinner, newWinner);
+
+  winners[matchIndex] = newWinner;
+
+  saveWinners();
+  saveScores();
+  renderScores();
 });
 
-window.resetPadel = function() {
-  localStorage.removeItem(STORAGE_KEY);
-  for (let i = 0; i < matches.length; i++) {
-    document.querySelectorAll(`input[name="w${i+1}"]`).forEach(x => x.checked = false);
+window.resetMatchesOnly = function() {
+  // Nullstill kampvalg (A/B) uten å endre poengsum
+  winners = {};
+  localStorage.removeItem(WINNERS_KEY);
+
+  for (let i = 1; i <= matches.length; i++) {
+    const radios = document.querySelectorAll('input[name="w' + i + '"]');
+    radios.forEach(r => r.checked = false);
   }
+
+  // Score beholdes
   renderScores();
 };
 
-loadWinners();
+window.resetAll = function() {
+  // Nullstill alt (både kampvalg og poeng)
+  winners = {};
+  scores = initEmptyScores();
+
+  localStorage.removeItem(WINNERS_KEY);
+  localStorage.removeItem(SCORES_KEY);
+
+  for (let i = 1; i <= matches.length; i++) {
+    const radios = document.querySelectorAll('input[name="w' + i + '"]');
+    radios.forEach(r => r.checked = false);
+  }
+
+  saveScores();
+  renderScores();
+};
+
+// Init
+winners = loadWinners();
+const loadedScores = loadScores();
+
+if (loadedScores === null) {
+  // Hvis score ikke finnes enda, men winners finnes: rekonstruer score fra winners
+  scores = initEmptyScores();
+  if (Object.keys(winners).length > 0) {
+    rebuildScoresFromWinners();
+  } else {
+    saveScores();
+  }
+} else {
+  // Normal: bruk lagret score
+  scores = initEmptyScores();
+  // Merge inn lagrede verdier (slik at nye spillere alltid får 0)
+  for (const [k, v] of Object.entries(loadedScores)) {
+    scores[k] = Number(v) || 0;
+  }
+}
+
+setRadioFromWinners();
 renderScores();
 </script>
 </body>
