@@ -44,9 +44,9 @@
         
         <tr>
           <td>1</td>
-          <td><b>afds</b> &amp; <b>asdf</b></td>
-          <td><b>sadf</b> &amp; <b>wq</b></td>
-          <td>df</td>
+          <td><b>Herman</b> &amp; <b>Markus</b></td>
+          <td><b>Ken</b> &amp; <b>Thea</b></td>
+          <td>Partap</td>
           <td>
             <label><input type="radio" name="w1" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w1" value="B"> B</label>
@@ -55,9 +55,9 @@
         
         <tr>
           <td>2</td>
-          <td><b>asdf</b> &amp; <b>wq</b></td>
-          <td><b>df</b> &amp; <b>sadf</b></td>
-          <td>afds</td>
+          <td><b>Ken</b> &amp; <b>Markus</b></td>
+          <td><b>Partap</b> &amp; <b>Thea</b></td>
+          <td>Herman</td>
           <td>
             <label><input type="radio" name="w2" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w2" value="B"> B</label>
@@ -66,9 +66,9 @@
         
         <tr>
           <td>3</td>
-          <td><b>afds</b> &amp; <b>df</b></td>
-          <td><b>asdf</b> &amp; <b>sadf</b></td>
-          <td>wq</td>
+          <td><b>Herman</b> &amp; <b>Partap</b></td>
+          <td><b>Markus</b> &amp; <b>Thea</b></td>
+          <td>Ken</td>
           <td>
             <label><input type="radio" name="w3" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w3" value="B"> B</label>
@@ -77,9 +77,9 @@
         
         <tr>
           <td>4</td>
-          <td><b>afds</b> &amp; <b>wq</b></td>
-          <td><b>asdf</b> &amp; <b>df</b></td>
-          <td>sadf</td>
+          <td><b>Herman</b> &amp; <b>Ken</b></td>
+          <td><b>Markus</b> &amp; <b>Partap</b></td>
+          <td>Thea</td>
           <td>
             <label><input type="radio" name="w4" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w4" value="B"> B</label>
@@ -88,9 +88,9 @@
         
         <tr>
           <td>5</td>
-          <td><b>afds</b> &amp; <b>sadf</b></td>
-          <td><b>df</b> &amp; <b>wq</b></td>
-          <td>asdf</td>
+          <td><b>Herman</b> &amp; <b>Thea</b></td>
+          <td><b>Ken</b> &amp; <b>Partap</b></td>
+          <td>Markus</td>
           <td>
             <label><input type="radio" name="w5" value="A"> A</label>
             <label style="margin-left:10px;"><input type="radio" name="w5" value="B"> B</label>
@@ -108,8 +108,8 @@
   </div>
 
 <script>
-const players = ['wq','df','asdf','sadf','afds'];
-const matches = [{a:['afds', 'asdf'], b:['sadf', 'wq']},{a:['asdf', 'wq'], b:['df', 'sadf']},{a:['afds', 'df'], b:['asdf', 'sadf']},{a:['afds', 'wq'], b:['asdf', 'df']},{a:['afds', 'sadf'], b:['df', 'wq']}];
+const players = ['Ken','Partap','Markus','Thea','Herman'];
+const matches = [{a:['Herman', 'Markus'], b:['Ken', 'Thea']},{a:['Ken', 'Markus'], b:['Partap', 'Thea']},{a:['Herman', 'Partap'], b:['Markus', 'Thea']},{a:['Herman', 'Ken'], b:['Markus', 'Partap']},{a:['Herman', 'Thea'], b:['Ken', 'Partap']}];
 
 function computeScores() {
   const scores = Object.fromEntries(players.map(p => [p, 0]));
