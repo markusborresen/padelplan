@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Padelplan 2026-02-27</title>
+  <style>
+    body { font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial; margin: 16px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 14px; max-width: 980px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+    th { text-align: left; font-size: 14px; }
+    td { font-size: 15px; }
+    .muted { color: #666; font-size: 13px; line-height: 1.35; }
+    .scoregrid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin-top: 12px; }
+    .pill { display: inline-block; padding: 3px 8px; border: 1px solid #ddd; border-radius: 999px; font-size: 13px; }
+    .tag { display:inline-block; padding: 4px 10px; border-radius: 999px; border:1px solid #ddd; font-size: 12px; }
+    @media print {
+      body { margin: 0; }
+      .card { border: none; }
+      .muted { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 style="margin:0 0 6px 0;">Padelplan (5 spillere, 5 kamper)</h2>
+    <div class="muted">
+      <span class="tag">PERFEKT</span><br/>
+      Kryss av vinnerlag per kamp (A/B) for å se poengsummer live. Print fra nettleser hvis ønskelig.
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Kamp</th>
+          <th>Lag A</th>
+          <th>Lag B</th>
+          <th>Hviler</th>
+          <th>Vinner</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>1</td>
+          <td><b>afds</b> &amp; <b>asdf</b></td>
+          <td><b>sadf</b> &amp; <b>wq</b></td>
+          <td>df</td>
+          <td>
+            <label><input type="radio" name="w1" value="A"> A</label>
+            <label style="margin-left:10px;"><input type="radio" name="w1" value="B"> B</label>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td><b>asdf</b> &amp; <b>wq</b></td>
+          <td><b>df</b> &amp; <b>sadf</b></td>
+          <td>afds</td>
+          <td>
+            <label><input type="radio" name="w2" value="A"> A</label>
+            <label style="margin-left:10px;"><input type="radio" name="w2" value="B"> B</label>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>3</td>
+          <td><b>afds</b> &amp; <b>df</b></td>
+          <td><b>asdf</b> &amp; <b>sadf</b></td>
+          <td>wq</td>
+          <td>
+            <label><input type="radio" name="w3" value="A"> A</label>
+            <label style="margin-left:10px;"><input type="radio" name="w3" value="B"> B</label>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>4</td>
+          <td><b>afds</b> &amp; <b>wq</b></td>
+          <td><b>asdf</b> &amp; <b>df</b></td>
+          <td>sadf</td>
+          <td>
+            <label><input type="radio" name="w4" value="A"> A</label>
+            <label style="margin-left:10px;"><input type="radio" name="w4" value="B"> B</label>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>5</td>
+          <td><b>afds</b> &amp; <b>sadf</b></td>
+          <td><b>df</b> &amp; <b>wq</b></td>
+          <td>asdf</td>
+          <td>
+            <label><input type="radio" name="w5" value="A"> A</label>
+            <label style="margin-left:10px;"><input type="radio" name="w5" value="B"> B</label>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+
+    <h3 style="margin:14px 0 6px 0;">Poeng (vinnerlag = 1 poeng per spiller)</h3>
+    <div id="scores" class="scoregrid"></div>
+    <div class="muted" style="margin-top:10px;">
+      NB: Poengvalg lagres ikke automatisk. Vil du lagre poeng, bruk CSV/Excel eller bygg videre med JSON-lagring.
+    </div>
+  </div>
+
+<script>
+const players = ['wq','df','asdf','sadf','afds'];
+const matches = [{a:['afds', 'asdf'], b:['sadf', 'wq']},{a:['asdf', 'wq'], b:['df', 'sadf']},{a:['afds', 'df'], b:['asdf', 'sadf']},{a:['afds', 'wq'], b:['asdf', 'df']},{a:['afds', 'sadf'], b:['df', 'wq']}];
+
+function computeScores() {
+  const scores = Object.fromEntries(players.map(p => [p, 0]));
+  for (let i = 0; i < matches.length; i++) {
+    const pick = document.querySelector(`input[name="w${i+1}"]:checked`);
+    if (!pick) continue;
+    const m = matches[i];
+    const team = pick.value === "A" ? m.a : m.b;
+    scores[team[0]] += 1;
+    scores[team[1]] += 1;
+  }
+  return scores;
+}
+
+function renderScores() {
+  const scores = computeScores();
+  const entries = Object.entries(scores).sort((a,b) => b[1]-a[1] || a[0].localeCompare(b[0]));
+  const el = document.getElementById("scores");
+  el.innerHTML = entries.map(([p, s]) => `<div><span class="pill">${s}</span> ${p}</div>`).join("");
+}
+
+document.addEventListener("change", (e) => {
+  if (e.target && e.target.name && e.target.name.startsWith("w")) renderScores();
+});
+renderScores();
+</script>
+</body>
+</html>
