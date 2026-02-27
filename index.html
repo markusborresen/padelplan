@@ -14,9 +14,7 @@
   th { text-align: left; font-size: 13px; }
   td { font-size: 14px; }
 
-  /* Gjør lag-kolonnene mer kompakte: la tekst wrappe/trimmes */
   .c-lag { overflow: hidden; text-overflow: ellipsis; }
-  .c-hvile { overflow: hidden; text-overflow: ellipsis; }
 
   h2 { font-size: 18px; margin: 0 0 6px 0; }
   h3 { font-size: 16px; margin: 12px 0 6px 0; }
@@ -33,38 +31,16 @@
   }
   .btn:active { transform: translateY(1px); }
 
-  /* Winner-segment: store trykkflater, jevn bredde */
   .winnercell { white-space: nowrap; }
-  .winseg {
-    display: flex;
-    gap: 8px;
-    align-items: stretch;
-    justify-content: space-between;
-    max-width: 170px;
-  }
-  .winradio {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-    width: 0;
-    height: 0;
-  }
+  .winseg { display: flex; gap: 10px; align-items: stretch; justify-content: space-between; max-width: 200px; }
+  .winradio { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
   .winbtn {
-    flex: 1;
-    text-align: center;
-    padding: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    font-weight: 800;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    font-size: 16px;
+    flex: 1; text-align: center; padding: 10px 0;
+    border: 1px solid #ddd; border-radius: 14px;
+    font-weight: 800; user-select: none; -webkit-tap-highlight-color: transparent;
+    font-size: 18px;
   }
-  .winradio:checked + .winbtn {
-    background: #111;
-    color: #fff;
-    border-color: #111;
-  }
+  .winradio:checked + .winbtn { background: #111; color: #fff; border-color: #111; }
   .winbtn:active { transform: translateY(1px); }
 
   @media (max-width: 520px) {
@@ -81,11 +57,8 @@
     .scoregrid { grid-template-columns: 1fr; }
     .btn { padding: 6px 9px; font-size: 12.5px; }
 
-    /* Viktig: gjør Lag A/B smalere + gi vinner mer plass */
-    .winseg { max-width: 200px; gap: 10px; }
-    .winbtn { padding: 12px 0; border-radius: 14px; font-size: 20px; }
-
-    /* Trim lag-kolonnene hardere på mobil */
+    .winseg { max-width: 220px; gap: 12px; }
+    .winbtn { padding: 12px 0; font-size: 22px; }
     .c-lag { font-size: 12.5px; }
   }
 
@@ -114,11 +87,10 @@
     <table>
       <colgroup>
         
-      <col style="width: 9%;">
-      <col style="width: 28%;">
-      <col style="width: 28%;">
-      <col style="width: 15%;">
-      <col style="width: 20%;">
+      <col style="width: 10%;">
+      <col style="width: 32%;">
+      <col style="width: 32%;">
+      <col style="width: 26%;">
     
       </colgroup>
       <thead>
@@ -126,7 +98,6 @@
           <th>Kamp</th>
           <th>Lag A</th>
           <th>Lag B</th>
-          <th>Hviler</th>
           <th>Vinner</th>
         </tr>
       </thead>
@@ -136,7 +107,6 @@
           <td class="c-kamp">1</td>
           <td class="c-lag"><b>Herman</b> &amp; <b>Partap</b></td>
           <td class="c-lag"><b>Markus</b> &amp; <b>Victoria</b></td>
-          <td class="c-hvile">Marius</td>
           <td class="c-win winnercell">
             <div class="winseg" role="group" aria-label="Vinner kamp 1">
               <input class="winradio" type="radio" name="w1" id="w1A" value="A">
@@ -152,7 +122,6 @@
           <td class="c-kamp">2</td>
           <td class="c-lag"><b>Herman</b> &amp; <b>Marius</b></td>
           <td class="c-lag"><b>Partap</b> &amp; <b>Victoria</b></td>
-          <td class="c-hvile">Markus</td>
           <td class="c-win winnercell">
             <div class="winseg" role="group" aria-label="Vinner kamp 2">
               <input class="winradio" type="radio" name="w2" id="w2A" value="A">
@@ -168,7 +137,6 @@
           <td class="c-kamp">3</td>
           <td class="c-lag"><b>Herman</b> &amp; <b>Victoria</b></td>
           <td class="c-lag"><b>Marius</b> &amp; <b>Markus</b></td>
-          <td class="c-hvile">Partap</td>
           <td class="c-win winnercell">
             <div class="winseg" role="group" aria-label="Vinner kamp 3">
               <input class="winradio" type="radio" name="w3" id="w3A" value="A">
@@ -184,7 +152,6 @@
           <td class="c-kamp">4</td>
           <td class="c-lag"><b>Marius</b> &amp; <b>Victoria</b></td>
           <td class="c-lag"><b>Markus</b> &amp; <b>Partap</b></td>
-          <td class="c-hvile">Herman</td>
           <td class="c-win winnercell">
             <div class="winseg" role="group" aria-label="Vinner kamp 4">
               <input class="winradio" type="radio" name="w4" id="w4A" value="A">
@@ -200,7 +167,6 @@
           <td class="c-kamp">5</td>
           <td class="c-lag"><b>Herman</b> &amp; <b>Markus</b></td>
           <td class="c-lag"><b>Marius</b> &amp; <b>Partap</b></td>
-          <td class="c-hvile">Victoria</td>
           <td class="c-win winnercell">
             <div class="winseg" role="group" aria-label="Vinner kamp 5">
               <input class="winradio" type="radio" name="w5" id="w5A" value="A">
